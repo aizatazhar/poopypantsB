@@ -4,7 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "mocha --exit"
+        "dev": "set ENV=DEV&& nodemon index.js",
+        "prod": "set ENV=PROD&& nodemon index.js",
+        "test": "set ENV=TEST&& mocha --exit"
     },
     "keywords": [],
     "author": "aizatazhar",

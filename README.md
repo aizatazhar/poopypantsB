@@ -10,15 +10,29 @@ A web app for quotes and stuff.
 
 -   Clone the repo `git clone https://github.com/aizatazhar/cs3219-otot-task-b.git`
 -   `npm install`
--   In `index.js`, update the mongoose uri as `mongodb://localhost/cs3219-task-b`
--   On a terminal, do `nodemon index.js`
--   On a separate terminal, do `mongosh`
+-   Create `.env` file at root of repo and add
+
+    ```
+    PORT="3000"
+    ENV=${ENV}
+    DEV="mongodb://localhost/cs3219-task-b"
+    ```
+
+-   On a terminal, do `mongosh`
+-   On a separate terminal, do `npm run dev`
 -   Have fun on postman?
 
 ### Running deployed
 
 -   Clone the repo `git clone https://github.com/aizatazhar/cs3219-otot-task-b.git`
 -   `npm install`
--   In `index.js`, update the mongoose uri
--   On a terminal, do `nodemon index.js`
+-   Create `.env` file at root of repo and add
+
+    ```
+    PORT="3000"
+    ENV=${ENV}
+    PROD=<your MongoDB url>
+    ```
+
+-   On a terminal, do `npm run prod`
 -   Have fun on postman?
