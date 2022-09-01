@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "set ENV=DEV&& nodemon index.js",
         "prod": "set ENV=PROD&& nodemon index.js",
-        "test": "set ENV=TEST&& mocha --exit"
+        "test": "set ENV=TEST&& mocha --exit --timeout 20000"
     },
     "keywords": [],
     "author": "aizatazhar",
@@ -15,6 +15,7 @@
         "body-parser": "^1.20.0",
         "chai": "^4.3.6",
         "chai-http": "^4.3.0",
+        "cross-env": "^7.0.3",
         "dotenv": "^16.0.1",
         "express": "^4.18.1",
         "mocha": "^10.0.0",

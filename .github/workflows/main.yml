@@ -1,0 +1,43 @@
+name: Node.js CI
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [15.x]
+
+        steps:
+            - name: Create .env file
+              run: |
+                  touch .env
+                  echo PORT=3000 >> .env
+                  echo ENV=TEST >> .env
+                  echo MONGODB_DEV=${{ secrets.MONGODB_DEV }} >> .env
+                  echo MONGODB_PROD=${{ secrets.MONGODB_PROD }} >> .env
+                  echo MONGODB_TEST=${{ secrets.MONGODB_TEST }} >> .env
+                  cat .env
+                  ls -a
+            - name: Checking secret
+              run: |
+                  if [ "$MONGODB_TEST" == "mongodb+srv://aizatazhar:R7FtSe8bG5ubF23@cluster0.bfblgo4.mongodb.net/quotesTest?retryWrites=true&w=majority" ]
+                  then
+                      echo "Got secret"
+                  fi
+              env:
+                  MONGODB_TEST: ${{ secrets.MONGODB_TEST }}
+            - uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - run: npm install
+            - run: npm run build --if-present
+            - run: npm test

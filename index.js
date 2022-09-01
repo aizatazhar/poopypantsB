@@ -12,7 +12,17 @@ module.exports = app.listen(port, () => {
 });
 
 const mongoose = require("mongoose");
-mongoose.connect(process.env.DEV, { useNewUrlParser: true });
+mongoose.connect(getMongoDbUri(), { useNewUrlParser: true });
 const db = mongoose.connection;
 // Bind connection to error event to get notification of connection errors
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
+function getMongoDbUri() {
+    switch (process.env.ENV) {
+        case "PROD":
+            return process.env.MONGODB_PROD;
+        case "TEST":
+            return process.env.MONGODB_TEST;
+        default:
+            return process.env.MONGODB_DEV;
+    }
+}
