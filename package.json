@@ -4,6 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "start": "node index.js",
         "dev": "set ENV=DEV&& nodemon index.js",
         "prod": "set ENV=PROD&& nodemon index.js",
         "test": "set ENV=TEST&& mocha --exit --timeout 20000"
