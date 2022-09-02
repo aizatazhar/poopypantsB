@@ -1,1 +1,3 @@
+# If server is named anything other than server.js, add a script to package.json, e.g.
+# "start": "node index.js", so that gCloud can find it
 runtime: nodejs12

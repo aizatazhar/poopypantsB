@@ -1,0 +1,37 @@
+name: Continuous Deployment
+
+on:
+    pull_request_target:
+        branches: [master]
+        types:
+            - closed
+
+jobs:
+    deploy:
+        if: github.event.pull_request.merged == true
+
+        # Refer to the following docs
+        # Service account + authentication: https://github.com/google-github-actions/setup-gcloud/blob/main/example-workflows/gae/README.md#Setup
+        # Deploy AppEngine: https://github.com/google-github-actions/deploy-appengine#Usage
+        name: Deploy to Google AppEngine
+
+        permissions:
+            contents: read
+            id-token: write
+
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Authenticate Google Cloud
+              uses: google-github-actions/auth@v0
+              with:
+                  credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+            - name: Deploy AppEngine
+              uses: google-github-actions/deploy-appengine@v0
+
+            - name: View deployed URL
+              run: 'curl "${{ steps.deploy.outputs.url }}"'
