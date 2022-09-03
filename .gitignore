@@ -1,2 +1,5 @@
 node_modules
 .env
+# Ignore generated credentials from google-github-actions/auth
+gha-creds-*.json
+cs3219-task-b-361315-700813d438f1.json
