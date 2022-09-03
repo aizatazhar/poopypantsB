@@ -1,6 +1,8 @@
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
     Button,
     Heading,
+    IconButton,
     Spinner,
     Table,
     TableContainer,
@@ -9,12 +11,47 @@ import {
     Th,
     Thead,
     Tr,
+    useToast,
     VStack,
 } from "@chakra-ui/react";
-import useFetchData from "./hooks/useFetchData";
+import { useEffect, useState } from "react";
+import axiosInstance from "./lib/axiosInstance";
 
 function App() {
-    const { response: quotes, isLoading } = useFetchData("");
+    const [quotes, setQuotes] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const toast = useToast();
+
+    useEffect(() => {
+        getQuotes();
+    }, []);
+
+    const getQuotes = async () => {
+        try {
+            setIsLoading(true);
+            const response = await axiosInstance.get("/api/quotes");
+            setQuotes(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+        setIsLoading(false);
+    };
+
+    const onDelete = async (id) => {
+        try {
+            const response = await axiosInstance.delete(`/api/quotes/${id}`);
+            toast({
+                title: response.data.message,
+                description: `Deleted the quote "${response.data.data.text}" by ${response.data.data.author}`,
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+            });
+            getQuotes();
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <VStack spacing={8}>
@@ -39,7 +76,14 @@ function App() {
                                         <Td>{quote.author}</Td>
                                         <Td>{quote.text}</Td>
                                         <Td>{new Date(quote.create_date).toLocaleDateString()}</Td>
-                                        <Td>Delete</Td>
+                                        <Td>
+                                            <IconButton
+                                                variant="ghost"
+                                                aria-label="Delete quote"
+                                                icon={<DeleteIcon />}
+                                                onClick={() => onDelete(quote._id)}
+                                            />
+                                        </Td>
                                     </Tr>
                                 );
                             })}
