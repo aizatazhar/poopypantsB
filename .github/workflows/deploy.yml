@@ -30,4 +30,4 @@ jobs:
               uses: google-github-actions/deploy-appengine@v0
 
             - name: View deployed URL
-              run: 'curl "${{ steps.deploy.outputs.url }}"'
+              run: echo ${{ steps.deploy.outputs.url }}
