@@ -117,7 +117,7 @@ function App() {
 
             {isLoading && <Spinner color="green.500" emptyColor="green.100" size="lg" />}
             {!isLoading && (
-                <TableContainer w="full" maxH="xl" overflowY="scroll">
+                <TableContainer w="full" maxH={{ base: "md", lg: "xl" }} overflowY="scroll">
                     <Table variant="striped" colorScheme="green">
                         <Thead>
                             <Tr>
