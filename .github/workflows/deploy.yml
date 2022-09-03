@@ -1,15 +1,11 @@
 name: Continuous Deployment
 
 on:
-    pull_request_target:
+    push:
         branches: [master]
-        types:
-            - closed
 
 jobs:
     deploy:
-        if: github.event.pull_request.merged == true
-
         # Refer to the following docs
         # Service account + authentication: https://github.com/google-github-actions/setup-gcloud/blob/main/example-workflows/gae/README.md#Setup
         # Deploy AppEngine: https://github.com/google-github-actions/deploy-appengine#Usage
