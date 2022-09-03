@@ -1,10 +1,8 @@
-import { DeleteIcon } from "@chakra-ui/icons";
 import {
     Button,
     FormControl,
     FormLabel,
     Heading,
-    IconButton,
     Input,
     Modal,
     ModalBody,
@@ -17,7 +15,6 @@ import {
     Table,
     TableContainer,
     Tbody,
-    Td,
     Th,
     Thead,
     Tr,
@@ -26,6 +23,7 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import QuoteItem from "./components/QuoteItem";
 import axiosInstance from "./lib/axiosInstance";
 
 function App() {
@@ -75,10 +73,28 @@ function App() {
         }
     };
 
+    const onEdit = async (quote) => {
+        try {
+            const response = await axiosInstance.put(`/api/quotes/${quote._id}`, quote);
+            showToast(
+                response.data.message,
+                `Updated the quote "${response.data.data.text}" by ${response.data.data.author}`,
+                "success"
+            );
+            getQuotes();
+        } catch (error) {
+            showToast("An error occurred", error.toString(), "error");
+        }
+    };
+
     const addQuote = async () => {
         try {
             if (!quoteToAdd.author || !quoteToAdd.text) {
-                return showToast("An error occurred", "Both fields must not be empty", "error");
+                return showToast(
+                    "An error occurred",
+                    "Both author and quote fields must not be empty",
+                    "error"
+                );
             }
 
             const response = await axiosInstance.post(`/api/quotes`, quoteToAdd);
@@ -108,36 +124,25 @@ function App() {
                                 <Th>Author</Th>
                                 <Th>Quote</Th>
                                 <Th>Date added</Th>
+                                <Th>Edit</Th>
                                 <Th>Delete</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
                             {quotes.data.map((quote) => {
                                 return (
-                                    <Tr
+                                    <QuoteItem
                                         key={quote._id}
-                                        _hover={{
-                                            color: "teal.400",
-                                        }}>
-                                        <Td>{quote.author}</Td>
-                                        <Td>{quote.text}</Td>
-                                        <Td>{new Date(quote.create_date).toLocaleDateString()}</Td>
-                                        <Td>
-                                            <IconButton
-                                                variant="ghost"
-                                                aria-label="Delete quote"
-                                                icon={<DeleteIcon />}
-                                                onClick={() => onDelete(quote._id)}
-                                            />
-                                        </Td>
-                                    </Tr>
+                                        quote={quote}
+                                        onDelete={onDelete}
+                                        onEdit={onEdit}
+                                    />
                                 );
                             })}
                         </Tbody>
                     </Table>
                 </TableContainer>
             )}
-
             <Button colorScheme="green" onClick={onOpen}>
                 Add a quote
             </Button>
