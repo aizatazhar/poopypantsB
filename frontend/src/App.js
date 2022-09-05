@@ -5,6 +5,7 @@ import {
     Heading,
     Input,
     Modal,
+    Divider,
     ModalBody,
     ModalCloseButton,
     ModalContent,
@@ -23,6 +24,7 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import Joke from "./components/Joke";
 import QuoteItem from "./components/QuoteItem";
 import axiosInstance from "./lib/axiosInstance";
 
@@ -112,12 +114,17 @@ function App() {
     };
 
     return (
-        <VStack spacing={8}>
-            <Heading>Lovely Quotes</Heading>
+        <VStack spacing={4}>
+            <Heading size="xl">Lovely Quotes & Jokes</Heading>
+            <Heading size="sm">cheer yourself up! ❤️</Heading>
 
             {isLoading && <Spinner color="green.500" emptyColor="green.100" size="lg" />}
             {!isLoading && (
-                <TableContainer w="full" maxH={{ base: "md", lg: "xl" }} overflowY="scroll">
+                <TableContainer
+                    w="full"
+                    maxH={{ base: "md", lg: "xl" }}
+                    overflowY="scroll"
+                    whiteSpace="break-spaces">
                     <Table variant="striped" colorScheme="green">
                         <Thead>
                             <Tr>
@@ -181,6 +188,11 @@ function App() {
                     </ModalFooter>
                 </ModalContent>
             </Modal>
+
+            <Divider />
+
+            <Heading size="sm">A funny nerdy joke for you! ❤️</Heading>
+            <Joke refreshQuotes={getQuotes} />
         </VStack>
     );
 }
