@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "79faf626-aadd-47c4-9b89-a4fbdf440495",
+		"name": "cs3219-task-b",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "quotes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"author\": \"Lao Tzu\",\r\n    \"text\": \"The journey of a thousand miles begins with one step.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{deployed}}/api/quotes",
+					"host": [
+						"{{deployed}}"
+					],
+					"path": [
+						"api",
+						"quotes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "quotes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{deployed}}/api/quotes",
+					"host": [
+						"{{deployed}}"
+					],
+					"path": [
+						"api",
+						"quotes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "quotes",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"author\": \"Friedrich Nietzsche\",\r\n    \"text\": \"That which does not kill us makes us stronger.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{deployed}}/api/quotes/630e1686506c249279b35beb",
+					"host": [
+						"{{deployed}}"
+					],
+					"path": [
+						"api",
+						"quotes",
+						"630e1686506c249279b35beb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "quotes",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{deployed}}/api/quotes/630e1680506c249279b35be9",
+					"host": [
+						"{{deployed}}"
+					],
+					"path": [
+						"api",
+						"quotes",
+						"630e1680506c249279b35be9"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
